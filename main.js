@@ -7,17 +7,29 @@ function createWindow() {
   // Create a new browser window
   const win = new BrowserWindow({
     resizable: false, // Disable resizing
-    frame: false, // Disable the window frame 
+    frame: false, // Disable the window frame
+    transparent: true, // Make the window transparent 
     width: 600,
-    height: 30,
+    height: 40,
     useContentSize: true, // Use the content size for the window size
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true, // Enable remote module to access BrowserWindow instance
     }
   });
 
   // Load the index.html file into the window
   win.loadFile('index.html');
+
+  // Make the window draggable
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.insertCSS(`
+      html, body {
+        -webkit-app-region: drag; /* Enable dragging */
+        user-select: none; /* Disable content selection */
+      }
+    `);
+  });
 
   // Hide the menu bar
   win.setAutoHideMenuBar(true);
