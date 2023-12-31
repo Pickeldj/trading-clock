@@ -1,0 +1,16 @@
+body {
+  display: flex; /* Set the display value to flex */
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  background-color: rgba(23, 3, 3, 0.904);
+  color: rgb(221, 226, 249);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  font-weight: medium;
+  height: 100vh; /* Set a fixed height to keep the size static */
+  gap: 10px; /* Add equal spacing between time zones */
+  -webkit-app-region: drag; /* Make the window draggable */
+}
+.open {
+  background-color: rgba(14, 138, 14, 0.552);
+}
