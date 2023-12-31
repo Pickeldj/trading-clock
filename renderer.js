@@ -21,15 +21,27 @@ function isMarketOpen(time, openHour, closeHour) {
   openHour = Math.floor(openHour);
   closeHour = Math.floor(closeHour);
 
-  if (currentHour > openHour && currentHour < closeHour) {
-    return true;
+  if (openHour < closeHour) {
+    // Market opens and closes on the same day
+    if (currentHour > openHour && currentHour < closeHour) {
+      return true;
+    }
+    if (currentHour === openHour && currentMinute >= openMinute) {
+      return true;
+    }
+    if (currentHour === closeHour && currentMinute < closeMinute) {
+      return true;
+    }
+  } else {
+    // Market is open overnight
+    if (currentHour > openHour || (currentHour === openHour && currentMinute >= openMinute)) {
+      return true;
+    }
+    if (currentHour < closeHour || (currentHour === closeHour && currentMinute < closeMinute)) {
+      return true;
+    }
   }
-  if (currentHour === openHour && currentMinute >= openMinute) {
-    return true;
-  }
-  if (currentHour === closeHour && currentMinute < closeMinute) {
-    return true;
-  }
+
   return false;
 }
 

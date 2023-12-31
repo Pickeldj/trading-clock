@@ -6,7 +6,10 @@ const mockAudio = { play: jest.fn(), pause: jest.fn(), currentTime: 0 };
 global.Audio = jest.fn(() => mockAudio);
 
 // Import the functions to be tested from renderer.js
-const { isMarketOpen, playAlarmSound, updateClock } = require('./renderer.js');
+const renderer = require('./renderer.js');
+const isMarketOpen = renderer.isMarketOpen;
+const playAlarmSound = renderer.playAlarmSound;
+const updateClock = renderer.updateClock;
 
 // Mock the electron module
 jest.mock('electron', () => {
@@ -114,7 +117,7 @@ test('Alarm bell plays for 10 seconds', () => {
     expect(mockAudio.currentTime).toBe(0);
 });
 
-  // Test that the updateClock function updates the time correctly
+// Test that the updateClock function updates the time correctly
 test('updateClock updates the time correctly', () => {
     jest.resetAllMocks();
     // Call the updateClock function
@@ -125,4 +128,41 @@ test('updateClock updates the time correctly', () => {
     expect(document.getElementById('new-york-time').textContent).toBe('New York: 19:00:00');
     expect(document.getElementById('tokyo-time').textContent).toBe('Tokyo: 09:00:00');
     expect(document.getElementById('sydney-time').textContent).toBe('Sydney: 11:00:00');
+});
+
+// Helper function to generate tests for each city
+function testCity(city, openHour, closeHour) {
+  // Test that the alarm bell plays on market open
+  test(`Alarm bell plays on market open for ${city}`, () => {
+    jest.resetAllMocks();
+    const currentTime = new Date('2022-01-01T00:00:00Z');
+    currentTime.setUTCHours(openHour);
+    currentTime.setUTCMinutes(1);  // Set the time to one minute after the opening hour
+
+    if (isMarketOpen(currentTime, openHour, closeHour)) {
+      playAlarmSound();
+    }
+
+    expect(mockAudio.play).toHaveBeenCalled();
   });
+
+  // Test that the alarm bell plays on market close
+  test(`Alarm bell plays on market close for ${city}`, () => {
+    jest.resetAllMocks();
+    const currentTime = new Date('2022-01-01T00:00:00Z');
+    currentTime.setUTCHours(closeHour);
+    currentTime.setUTCMinutes(1);  // Set the time to one minute after the closing hour
+
+    if (!isMarketOpen(currentTime, openHour, closeHour)) {
+      playAlarmSound();
+    }
+
+    expect(mockAudio.play).toHaveBeenCalled();
+  });
+}
+
+// Test each city
+testCity('London', 8, 16.5);
+testCity('New York', 16.5, 21);
+testCity('Tokyo', 0, 6);
+testCity('Sydney', 22, 5);
