@@ -76,54 +76,54 @@ function updateClock() {
       return diff <= 1000; // 1000 milliseconds = 1 second
     }
 
-  // Check if the market is open and change the background color
-  if (isMarketOpen(londonTime, londonOpenTime, londonCloseTime)) {
-    document.getElementById('london-time').classList.add('open');
-    if (londonTime.getHours() === Math.floor(londonOpenTime) && londonTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-    if (londonTime.getHours() === Math.floor(londonCloseTime) && londonTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-  } else {
-    document.getElementById('london-time').classList.remove('open');
+ // Check if the market is open and change the background color
+ if (isMarketOpen(londonTime, londonOpenTime, londonCloseTime)) {
+  document.getElementById('london-time').classList.add('open');
+  if (shouldPlayAlarm(londonTime.getTime(), new Date(londonTime.getFullYear(), londonTime.getMonth(), londonTime.getDate(), Math.floor(londonOpenTime), (londonOpenTime % 1) * 60).getTime())) {
+    playAlarmSound();
   }
-  
-  if (isMarketOpen(newYorkTime, newYorkOpenTime, newYorkCloseTime)) {
-    document.getElementById('new-york-time').classList.add('open');
-    if (newYorkTime.getHours() === Math.floor(newYorkOpenTime) && newYorkTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-    if (newYorkTime.getHours() === Math.floor(newYorkCloseTime) && newYorkTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-  } else {
-    document.getElementById('new-york-time').classList.remove('open');
+  if (shouldPlayAlarm(londonTime.getTime(), new Date(londonTime.getFullYear(), londonTime.getMonth(), londonTime.getDate(), Math.floor(londonCloseTime), (londonCloseTime % 1) * 60).getTime())) {
+    playAlarmSound();
   }
-  
-  if (isMarketOpen(tokyoTime, tokyoOpenTime, tokyoCloseTime)) {
-    document.getElementById('tokyo-time').classList.add('open');
-    if (tokyoTime.getHours() === Math.floor(tokyoOpenTime) && tokyoTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-    if (tokyoTime.getHours() === Math.floor(tokyoCloseTime) && tokyoTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-  } else {
-    document.getElementById('tokyo-time').classList.remove('open');
+} else {
+  document.getElementById('london-time').classList.remove('open');
+}
+
+if (isMarketOpen(newYorkTime, newYorkOpenTime, newYorkCloseTime)) {
+  document.getElementById('new-york-time').classList.add('open');
+  if (shouldPlayAlarm(newYorkTime.getTime(), new Date(newYorkTime.getFullYear(), newYorkTime.getMonth(), newYorkTime.getDate(), Math.floor(newYorkOpenTime), (newYorkOpenTime % 1) * 60).getTime())) {
+    playAlarmSound();
   }
-  
-  if (isMarketOpen(sydneyTime, sydneyOpenTime, sydneyCloseTime)) {
-    document.getElementById('sydney-time').classList.add('open');
-    if (sydneyTime.getHours() === Math.floor(sydneyOpenTime) && sydneyTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-    if (sydneyTime.getHours() === Math.floor(sydneyCloseTime) && sydneyTime.getMinutes() === 0) {
-      playAlarmSound();
-    }
-  } else {
-    document.getElementById('sydney-time').classList.remove('open');
+  if (shouldPlayAlarm(newYorkTime.getTime(), new Date(newYorkTime.getFullYear(), newYorkTime.getMonth(), newYorkTime.getDate(), Math.floor(newYorkCloseTime), (newYorkCloseTime % 1) * 60).getTime())) {
+    playAlarmSound();
   }
+} else {
+  document.getElementById('new-york-time').classList.remove('open');
+}
+
+if (isMarketOpen(tokyoTime, tokyoOpenTime, tokyoCloseTime)) {
+  document.getElementById('tokyo-time').classList.add('open');
+  if (shouldPlayAlarm(tokyoTime.getTime(), new Date(tokyoTime.getFullYear(), tokyoTime.getMonth(), tokyoTime.getDate(), Math.floor(tokyoOpenTime), (tokyoOpenTime % 1) * 60).getTime())) {
+    playAlarmSound();
+  }
+  if (shouldPlayAlarm(tokyoTime.getTime(), new Date(tokyoTime.getFullYear(), tokyoTime.getMonth(), tokyoTime.getDate(), Math.floor(tokyoCloseTime), (tokyoCloseTime % 1) * 60).getTime())) {
+    playAlarmSound();
+  }
+} else {
+  document.getElementById('tokyo-time').classList.remove('open');
+}
+
+if (isMarketOpen(sydneyTime, sydneyOpenTime, sydneyCloseTime)) {
+  document.getElementById('sydney-time').classList.add('open');
+  if (shouldPlayAlarm(sydneyTime.getTime(), new Date(sydneyTime.getFullYear(), sydneyTime.getMonth(), sydneyTime.getDate(), Math.floor(sydneyOpenTime), (sydneyOpenTime % 1) * 60).getTime())) {
+    playAlarmSound();
+  }
+  if (shouldPlayAlarm(sydneyTime.getTime(), new Date(sydneyTime.getFullYear(), sydneyTime.getMonth(), sydneyTime.getDate(), Math.floor(sydneyCloseTime), (sydneyCloseTime % 1) * 60).getTime())) {
+    playAlarmSound();
+  }
+} else {
+  document.getElementById('sydney-time').classList.remove('open');
+}
 }
 
 // Update the clock every second
@@ -131,7 +131,7 @@ setInterval(updateClock, 1000);
 
 // Export the necessary functions
 module.exports = {
-  isMarketOpen,
-  playAlarmSound,
-  updateClock
+isMarketOpen,
+playAlarmSound,
+updateClock
 };
