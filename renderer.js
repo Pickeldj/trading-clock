@@ -70,6 +70,12 @@ function updateClock() {
   document.getElementById('tokyo-time').textContent = `Tokyo: ${tokyoTime.toLocaleTimeString()}`;
   document.getElementById('sydney-time').textContent = `Sydney: ${sydneyTime.toLocaleTimeString()}`;
 
+    // Function to check if the alarm should be played
+    function shouldPlayAlarm(time, marketTime) {
+      let diff = Math.abs(time - marketTime);
+      return diff <= 1000; // 1000 milliseconds = 1 second
+    }
+
   // Check if the market is open and change the background color
   if (isMarketOpen(londonTime, londonOpenTime, londonCloseTime)) {
     document.getElementById('london-time').classList.add('open');
