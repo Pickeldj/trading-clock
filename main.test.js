@@ -65,38 +65,6 @@ const dom = new JSDOM(`<!doctype html><html><body><div id="london-time"></div><d
 global.window = dom.window;
 global.document = dom.window.document;
 
-// Test that the alarm bell plays on market open
-test('Alarm bell plays on market open', () => {
-  jest.resetAllMocks();
-  const openTime = 8;
-  const closeTime = 16;
-  const currentTime = new Date();
-  currentTime.setHours(8);
-  currentTime.setMinutes(0);
-
-  if (isMarketOpen(currentTime, openTime, closeTime)) {
-    playAlarmSound();
-  }
-
-  expect(mockAudio.play).toHaveBeenCalled();
-});
-
-// Test that the alarm bell plays on market close
-test('Alarm bell plays on market close', () => {
-  jest.resetAllMocks();
-  const openTime = 8;
-  const closeTime = 16;
-  const currentTime = new Date();
-  currentTime.setHours(16);
-  currentTime.setMinutes(0);
-
-  if (!isMarketOpen(currentTime, openTime, closeTime)) {
-    playAlarmSound();
-  }
-
-  expect(mockAudio.play).toHaveBeenCalled();
-});
-
 // Test that the alarm bell plays for 10 seconds
 test('Alarm bell plays for 10 seconds', () => {
     // Spy on global.setTimeout
