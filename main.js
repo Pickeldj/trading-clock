@@ -7,11 +7,11 @@ function createWindow() {
   // Create a new browser window
   const win = new BrowserWindow({
     resizable: false, // Disable resizing
-    frame: false, // Disable the window frame
-    transparent: true, // Make the window transparent 
-    width: 600,
-    height: 40,
-    useContentSize: true, // Use the content size for the window size
+    transparent: true, // Make the window transparent
+    titleBarStyle: 'hidden', // Hide the title bar 
+    width: 545,
+    height: 43,
+    useContentSize: false, // Use the content size for the window size
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true, // Enable remote module to access BrowserWindow instance
