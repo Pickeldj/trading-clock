@@ -21,27 +21,21 @@ function createWindow() {
   // Load the index.html file into the window
   win.loadFile('index.html');
 
-  // Make the window draggable
+  // Make the window draggable and hide the scrollbar
   win.webContents.on('did-finish-load', () => {
     win.webContents.insertCSS(`
       html, body {
         -webkit-app-region: drag; /* Enable dragging */
         user-select: none; /* Disable content selection */
       }
-    `);
-  });
-
-  // Hide the menu bar
-  win.setAutoHideMenuBar(true);
-
-  // Hide the scrollbar in the window's web contents
-  win.webContents.on('did-finish-load', () => {
-    win.webContents.insertCSS(`
       ::-webkit-scrollbar {
         display: none; /* Hide the scrollbar */
       }
     `);
   });
+
+  // Hide the menu bar
+  win.setAutoHideMenuBar(true);
 }
 
 // Create an instance of AutoLaunch to enable auto-launching the app on system startup
