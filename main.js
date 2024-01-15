@@ -10,7 +10,7 @@ function createWindow() {
     transparent: true, // Make the window transparent
     titleBarStyle: 'hidden', // Hide the title bar 
     width: 545,
-    height: 43,
+    height: 41,
     useContentSize: false, // Use the content size for the window size
     webPreferences: {
       nodeIntegration: true,
