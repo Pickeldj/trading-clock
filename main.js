@@ -1,6 +1,6 @@
 // Import required modules
 const { app, BrowserWindow } = require('electron');
-const AutoLaunch = require('auto-launch');
+
 
 // Function to create the main window
 function createWindow() {
