@@ -38,16 +38,5 @@ function createWindow() {
   win.setAutoHideMenuBar(true);
 }
 
-// Create an instance of AutoLaunch to enable auto-launching the app on system startup
-let autoLaunch = new AutoLaunch({
-  name: 'TRADING-CLOCK',
-  path: app.getPath('exe'),
-});
-
-// Check if auto-launch is enabled, if not, enable it
-autoLaunch.isEnabled().then((isEnabled) => {
-  if (!isEnabled) autoLaunch.enable();
-});
-
 // When the app is ready, create the main window
 app.whenReady().then(createWindow);
